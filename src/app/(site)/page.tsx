@@ -4,6 +4,7 @@ import { ldJson, pageMeta } from "@/lib/seo";
 import Icon from "@/components/Icon";
 import { CtaBand, E, Heading, VerticalRows, pic } from "@/components/site/Blocks";
 import HeroGlobe from "@/components/site/HeroGlobe";
+import ServiceScene from "@/components/site/ServiceScene";
 import Sections from "@/components/site/Sections";
 import { getContent, getLocations, getSettings, getVerticals, paragraphs } from "@/lib/content";
 
@@ -169,6 +170,28 @@ export default async function Home() {
         </div>
       </section>
     ),
+
+    explore: verticals.length ? (
+      <section className="section" id="explore">
+        <div className="wrap">
+          <div className="explore-head reveal">
+            <div>
+              <div className="eyebrow" {...E("explore.eyebrow")}>
+                {c.explore.eyebrow}
+              </div>
+              <h2 className="h2" {...E("explore.title")}>
+                {c.explore.title}
+              </h2>
+            </div>
+            {c.explore.text ? <p {...E("explore.text")}>{c.explore.text}</p> : null}
+          </div>
+          <ServiceScene
+            services={verticals.map(({ id, slug, title, summary, icon }) => ({ id, slug, title, summary, icon: icon || "" }))}
+            labels={{ hint: c.explore.hint, linkLabel: c.explore.linkLabel }}
+          />
+        </div>
+      </section>
+    ) : null,
 
     strengths: strengths?.items?.length ? (
       <section className="section light">

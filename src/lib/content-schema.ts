@@ -52,6 +52,19 @@ export const SECTION_STYLE_FIELDS: Field[] = [
   { name: "bgImage", label: "Background photo", type: "image", help: "Used when Background colour is set to \"A photo\"." },
   { name: "overlay", label: "Darken the photo (%)", type: "number", placeholder: "70", help: "0 = photo only, 100 = fully dark." },
   { name: "align", label: "Text position", type: "select", options: [{ value: "", label: "Normal" }, { value: "left", label: "Left" }, { value: "center", label: "Centre" }] },
+  {
+    name: "edge",
+    label: "Bottom edge shape",
+    type: "select",
+    options: [
+      { value: "", label: "Normal (as designed)" },
+      { value: "none", label: "Straight" },
+      { value: "curve", label: "Gentle curve" },
+      { value: "wave", label: "Wave" },
+      { value: "slant", label: "Slant" },
+      { value: "terrace", label: "Terraces (excavation steps)" },
+    ],
+  },
   { name: "padTop", label: "Space above, computer (px)", type: "number", placeholder: "auto", advanced: true },
   { name: "padBottom", label: "Space below, computer (px)", type: "number", placeholder: "auto", advanced: true },
   { name: "padTopMobile", label: "Space above, phone (px)", type: "number", placeholder: "auto", advanced: true },
@@ -440,6 +453,13 @@ export const pageSchemas: PageSchema[] = [
         label: "Our services",
         description: "The service cards. Add, remove or edit the services themselves under \"Services\" in the left menu.",
         fields: [eyebrow, title, text(3), linkLabel("Button text under the cards")],
+      },
+      {
+        key: "explore",
+        icon: "excavator",
+        label: "Interactive service site",
+        description: "An illustrated worksite where each service is a glowing point. It uses your Services list automatically; a service's icon decides where it appears on the drawing.",
+        fields: [eyebrow, title, text(3), { name: "hint", label: "Small hint on the drawing", type: "text" }, { name: "linkLabel", label: "Link text in the info card", type: "text" }],
       },
       {
         key: "strengths",

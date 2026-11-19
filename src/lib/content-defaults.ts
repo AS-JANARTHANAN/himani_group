@@ -163,6 +163,13 @@ export const contentDefaults: Record<string, any> = {
       text: "From heavy groundwork to fine finishing materials. Choose a service to see what we can do for you.",
       linkLabel: "See all services",
     },
+    explore: {
+      eyebrow: "Explore Our Worksite",
+      title: "Everything we do, on one site",
+      text: "From the port to the palm farm, tap a glowing point to see each Himani service and where it fits in your project.",
+      hint: "Tap a glowing point",
+      linkLabel: "View service",
+    },
     strengths: {
       eyebrow: "Why Himani",
       title: "Built for tough sites and tight deadlines",

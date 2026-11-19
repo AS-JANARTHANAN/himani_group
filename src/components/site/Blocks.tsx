@@ -43,11 +43,14 @@ export function PageHero({
 }) {
   const hasImage = !!hero.image;
   return (
-    <section className={`page-hero ${hasImage ? "has-image" : ""}`}>
+    <section className={`page-hero ${hasImage ? "has-image hero-curve" : ""}`}>
       {hasImage ? (
-        <div className="bg" {...E("hero.image")}>
-          <img {...pic(hero.image)} alt={hero.imageAlt || ""} />
-        </div>
+        <>
+          <div className="bg" {...E("hero.image")}>
+            <img {...pic(hero.image, "(max-width: 900px) 100vw, 60vw")} alt={hero.imageAlt || ""} />
+          </div>
+          <span className="arc" aria-hidden />
+        </>
       ) : null}
       <div className="wrap inner">
         {crumbs?.length ? (

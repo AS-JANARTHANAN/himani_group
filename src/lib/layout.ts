@@ -13,7 +13,18 @@ export type SectionStyle = {
   headingSize?: string | number;
   headingSizeMobile?: string | number;
   minHeight?: string | number;
+  edge?: string;
 };
+
+/** Designed bottom edges used when the admin leaves "Bottom edge shape" on Normal. */
+export const DEFAULT_EDGES: Record<string, Record<string, string>> = {
+  home: { intro: "curve", verticals: "wave", explore: "terrace", strengths: "slant" },
+  about: { story: "curve", pillars: "terrace" },
+  businesses: { note: "wave" },
+  presence: { reach: "terrace" },
+  vision: { statement: "curve", values: "wave" },
+};
+export const EDGE_SHAPES = ["curve", "wave", "slant", "terrace"];
 
 export type Layout = { order?: string[]; sections?: Record<string, SectionStyle> };
 
@@ -32,7 +43,7 @@ const num = (v: unknown) => {
 };
 
 /** Converts a section's style settings to data-attributes + CSS variables for the wrapper. */
-export function styleAttrs(st: SectionStyle = {}) {
+export function styleAttrs(st: SectionStyle = {}, defaultEdge?: string) {
   const attrs: Record<string, string> = {};
   const vars: Record<string, string> = {};
   const px = (name: string, attr: string, v: unknown) => {
@@ -59,5 +70,7 @@ export function styleAttrs(st: SectionStyle = {}) {
     }
   }
   if (st.align === "center" || st.align === "left") attrs["data-align"] = st.align;
+  const edge = st.edge || defaultEdge;
+  if (edge && EDGE_SHAPES.includes(edge)) attrs["data-edge"] = edge;
   return { attrs, vars };
 }
