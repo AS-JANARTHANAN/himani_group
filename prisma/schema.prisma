@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String   @default("Administrator")
+  passwordHash String
+  /// Bumped on password change / "sign out everywhere" to cancel all existing logins
+  sessionVersion Int    @default(1)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+/// Page / global content stored as JSON documents, keyed by page ("home", "about", "settings", ...)
+model PageContent {
+  key       String   @id
+  data      String
+  updatedAt DateTime @updatedAt
+}
+
+model Vertical {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  title          String
+  summary        String
+  intro          String   @default("")
+  body           String   @default("")
+  capabilities   String   @default("[]")
+  image          String   @default("")
+  imageAlt       String   @default("")
+  imagePosition  String   @default("center")
+  icon           String   @default("")
+  order          Int      @default(0)
+  published      Boolean  @default(true)
+  seoTitle       String   @default("")
+  seoDescription String   @default("")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Location {
+  id          String   @id @default(cuid())
+  city        String
+  country     String
+  kind        String   @default("market") // hq | office | market
+  description String   @default("")
+  lat         Float
+  lng         Float
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Enquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String   @default("")
+  company   String   @default("")
+  interest  String   @default("")
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  filename  String
+  alt       String   @default("")
+  mime      String
+  size      Int
+  createdAt DateTime @default(now())
+}
+
+/// Additional pages created by the client from the admin (served at /<slug>)
+model CustomPage {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  title          String
+  eyebrow        String   @default("")
+  intro          String   @default("")
+  heroImage      String   @default("")
+  sections       String   @default("[]")
+  published      Boolean  @default(false)
+  seoTitle       String   @default("")
+  seoDescription String   @default("")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+/// Unsaved edits used by the admin live preview
+model PageDraft {
+  key       String   @id
+  data      String
+  updatedAt DateTime @updatedAt
+}

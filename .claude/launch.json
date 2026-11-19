@@ -1,0 +1,22 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "himani-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "port": 3100
+    },
+    {
+      "name": "himani-prod-test",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "scripts/qa/start-prod.mjs"
+      ],
+      "port": 3200
+    }
+  ]
+}

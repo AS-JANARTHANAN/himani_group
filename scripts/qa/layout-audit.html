@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8" /><title>Audit</title></head>
+<body>
+<pre id="out">running…</pre>
+<script>
+const PAGES = ["/", "/about", "/businesses", "/businesses/earthmoving-site-works", "/businesses/agriculture-livestock-operations", "/global-presence", "/vision", "/contact", "/nope-404"];
+const WIDTHS = (new URLSearchParams(location.search).get("w") || "360,393,430,768,820,1024,1180,1280,1440").split(",").map(Number);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+function load(path, w) {
+  return new Promise((res) => {
+    const f = document.createElement("iframe");
+    f.style.cssText = `width:${w}px;height:900px;border:0;position:absolute;left:-99999px;top:0`;
+    f.src = path;
+    f.onload = async () => { await sleep(900); res(f); };
+    document.body.appendChild(f);
+  });
+}
+function audit(doc, w) {
+  const win = doc.defaultView;
+  const issues = [];
+  const st = doc.createElement("style");
+  st.textContent = ".reveal{opacity:1!important;transform:none!important}.lines>span>span{transform:none!important;animation:none!important}";
+  doc.head.appendChild(st);
+  const sw = doc.documentElement.scrollWidth;
+  if (sw > w + 1) issues.push(`page scrolls sideways: ${sw}px`);
+  const name = (el) => (el.className && typeof el.className === "string" ? "." + el.className.trim().split(/\s+/).slice(0, 2).join(".") : el.tagName.toLowerCase());
+  const seen = new Set();
+  for (const el of doc.body.querySelectorAll("*")) {
+    const cs = win.getComputedStyle(el);
+    if (cs.display === "none" || cs.visibility === "hidden" || el.closest(".marquee,.mobile-menu,.hp,.globe-wrap,.explorer-card,svg,noscript,script,style")) continue;
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) continue;
+    // sticks out of the viewport horizontally
+    if ((r.right > w + 2 || r.left < -2) && !el.closest(".bg, .photo, .cta-band, .framed, .hero-home")) {
+      const k = "overflow " + name(el);
+      if (!seen.has(k)) { seen.add(k); issues.push(`${k} (${Math.round(r.left)}→${Math.round(r.right)})`); }
+    }
+    // text clipped inside its box
+    if (el.children.length === 0 && el.textContent.trim() && el.scrollWidth > el.clientWidth + 2 && cs.overflow !== "visible" && !cs.webkitLineClamp?.match(/\d/)) {
+      const k = "text clipped " + name(el);
+      if (!seen.has(k)) { seen.add(k); issues.push(`${k}: "${el.textContent.trim().slice(0, 30)}"`); }
+    }
+    // tiny text
+    const fs = parseFloat(cs.fontSize);
+    if (el.children.length === 0 && el.textContent.trim().length > 2 && fs < 10.5) {
+      const k = "tiny text " + name(el);
+      if (!seen.has(k)) { seen.add(k); issues.push(`${k} ${fs}px`); }
+    }
+    // small touch targets on phones/tablets
+    if (w <= 1024 && el.matches("a,button,summary,input,select,textarea") && !el.closest("p, li, .crumbs, dd, .tb-items, .site-footer ul, .bottom") && (r.height < 36 || r.width < 36)) {
+      const k = "small tap target " + name(el);
+      if (!seen.has(k)) { seen.add(k); issues.push(`${k} ${Math.round(r.width)}x${Math.round(r.height)}`); }
+    }
+  }
+  // unreadable text: contrast between text colour and the nearest solid background
+  // parses "rgb(r,g,b[,a])" and "color(srgb r g b / a)" into [r,g,b,a] (0-255, alpha 0-1)
+  const rgb = (c) => {
+    const m = c.match(/[\d.]+/g);
+    if (!m) return null;
+    const v = m.map(Number);
+    if (c.startsWith("color(")) return [v[0] * 255, v[1] * 255, v[2] * 255, v[3] ?? 1];
+    return [v[0], v[1], v[2], v[3] ?? 1];
+  };
+  const mix = (f, bgc) => [0, 1, 2].map((i) => f[i] * f[3] + bgc[i] * (1 - f[3]));
+  const lum = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+  for (const el of doc.body.querySelectorAll("p,h1,h2,h3,h4,span,a,li,dd,dt,label,small,b,strong,summary,button,blockquote")) {
+    if (!el.childNodes.length || ![...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) continue;
+    const cs = win.getComputedStyle(el);
+    if (cs.visibility === "hidden" || cs.display === "none" || +cs.opacity === 0) continue;
+    const r = el.getBoundingClientRect();
+    if (!r.width || el.closest(".marquee,.mobile-menu,.hp,.explorer-card,.hero-home,.page-hero,.vision-band,.next-v,.v-img,noscript")) continue;
+    const fg = rgb(cs.color);
+    let bg = null, n = el;
+    while (n && n !== doc.documentElement) {
+      const bcs = win.getComputedStyle(n);
+      if (bcs.backgroundImage && bcs.backgroundImage !== "none" && !bcs.backgroundImage.includes("gradient")) { bg = "img"; break; }
+      const c = rgb(bcs.backgroundColor);
+      if (c && c[3] > 0.6) { bg = c; break; }
+      n = n.parentElement;
+    }
+    if (!fg || bg === "img") continue;
+    bg = bg || [255, 255, 255];
+    const l1 = lum(mix(fg, bg)), l2 = lum(bg);
+    const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    if (ratio < 3) {
+      const k = "low contrast " + name(el);
+      if (!seen.has(k)) { seen.add(k); issues.push(`${k} ${ratio.toFixed(1)}:1 "${el.textContent.trim().slice(0, 30)}"`); }
+    }
+  }
+  // images squashed (rendered ratio very different from natural)
+  for (const im of doc.querySelectorAll("img")) {
+    if (!im.naturalWidth) continue;
+    const r = im.getBoundingClientRect();
+    const fit = win.getComputedStyle(im).objectFit;
+    if (r.width && fit !== "cover" && fit !== "contain" && Math.abs(r.width / r.height - im.naturalWidth / im.naturalHeight) > 0.05) issues.push(`squashed image ${im.src.slice(-30)}`);
+  }
+  // console errors captured
+  return issues;
+}
+(async () => {
+  const out = {};
+  for (const p of PAGES) for (const w of WIDTHS) {
+    const f = await load(p, w);
+    let iss;
+    try { iss = audit(f.contentDocument, w); } catch (e) { iss = ["audit failed: " + e.message]; }
+    if (iss.length) out[`${p} @${w}`] = iss;
+    f.remove();
+  }
+  document.getElementById("out").textContent = JSON.stringify(out, null, 1);
+  window.__done = out;
+})();
+</script>
+</body>
+</html>
