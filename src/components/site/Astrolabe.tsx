@@ -181,6 +181,8 @@ export default function Astrolabe({
           onPointerUp={onUp}
           onPointerCancel={onUp}
         >
+          {/* Round focus ring, shown only for keyboard users (replaces the browser's square outline) */}
+          <circle cx={C} cy={C} r={316} className="a-focus" />
           {/* Mater: the fixed outer body */}
           <circle cx={C} cy={C} r={306} className="a-line" />
           <circle cx={C} cy={C} r={296} className="a-band" />

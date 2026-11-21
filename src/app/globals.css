@@ -296,7 +296,9 @@ h1 em, h2 em, .h1 em, .h2 em { font-style: normal; color: var(--accent-text); }
 .astro-dial { width: 100%; max-width: 560px; aspect-ratio: 1; }
 .astro-dial svg { width: 100%; height: 100%; display: block; overflow: visible; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .astro-dial svg:active { cursor: grabbing; }
-.astro-dial svg:focus-visible { outline: 1px solid var(--accent); outline-offset: 6px; border-radius: 50%; }
+.astro-dial svg, .astro-dial svg:focus, .astro-dial svg:focus-visible { outline: none; }
+.a-focus { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.astro-dial svg:focus-visible .a-focus { opacity: 1; }
 .a-line { fill: none; stroke: color-mix(in srgb, var(--accent) 55%, transparent); stroke-width: 1; }
 .a-band { fill: none; stroke: color-mix(in srgb, var(--accent) 10%, transparent); stroke-width: 20; }
 .a-dot { fill: var(--accent); opacity: 0.75; }
