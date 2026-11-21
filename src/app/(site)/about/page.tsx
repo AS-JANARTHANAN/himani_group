@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Icon from "@/components/Icon";
-import { CtaBand, E, PageHero, pic } from "@/components/site/Blocks";
+import { CtaBand, E, PageHero, pic, SIZES } from "@/components/site/Blocks";
 import Sections from "@/components/site/Sections";
 import { getContent, getSettings, paragraphs } from "@/lib/content";
 
@@ -18,25 +18,34 @@ export default async function About() {
     hero: <PageHero hero={c.hero} crumbs={[{ label: s.labels.breadcrumbHome, href: "/" }, { label: c.hero.eyebrow }]} />,
     story: (
       <section className="section">
-        <div className="wrap split" style={{ alignItems: "start" }}>
+        <div className="wrap about">
           <div className="reveal">
-            <div className="eyebrow" {...E("story.eyebrow")}>
-              {story.eyebrow}
+            {story.eyebrow ? (
+              <div className="eyebrow" {...E("story.eyebrow")}>
+                {story.eyebrow}
+              </div>
+            ) : null}
+            {story.title ? (
+              <h2 className="h2" {...E("story.title")}>
+                {story.title}
+              </h2>
+            ) : null}
+            <div className="prose" {...E("story.text")}>
+              {paragraphs(story.text).map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </div>
-            <h2 className="h2" {...E("story.title")}>
-              {story.title}
-            </h2>
             {story.quote ? (
               <blockquote className="quote" {...E("story.quote")}>
                 {story.quote}
               </blockquote>
             ) : null}
           </div>
-          <div className="prose reveal d1" {...E("story.text")}>
-            {paragraphs(story.text).map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
+          {story.image ? (
+            <div className="about-art reveal" {...E("story.image")}>
+              <img {...pic(story.image, SIZES.aboutArt)} alt={story.imageAlt || ""} loading="lazy" />
+            </div>
+          ) : null}
         </div>
       </section>
     ),
@@ -80,7 +89,7 @@ export default async function About() {
             </h2>
             {approach.image ? (
               <div className="img-zoom reveal-img approach-img" {...E("approach.image")}>
-                <img {...pic(approach.image, "(max-width: 900px) 100vw, 50vw")} alt="" loading="lazy" />
+                <img {...pic(approach.image, SIZES.framed)} alt="" loading="lazy" />
               </div>
             ) : null}
           </div>

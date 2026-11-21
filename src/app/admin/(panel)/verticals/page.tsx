@@ -10,7 +10,7 @@ export default async function Verticals() {
         <div>
           <div className="a-crumb">Services & places</div>
           <h1>Services</h1>
-          <p>Each service gets a card on the Home and Services pages, plus its own page. Use the arrows to change the order. Click "Shown/Hidden" to show or hide a service.</p>
+          <p>Each business gets a row on the Home and Our Businesses pages, plus its own page. Use the arrows to change the order. Click "Shown/Hidden" to show or hide a business.</p>
         </div>
         <Link href="/admin/verticals/new" className="a-btn">
           ＋ Add a service

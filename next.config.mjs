@@ -24,7 +24,7 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   images: {
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/webp"], // WebP only: AVIF smoothed away fine detail in the photos
     minimumCacheTTL: 60 * 60 * 24 * 30, // resized photos are cached for 30 days
   },
   experimental: { serverActions: { bodySizeLimit: "12mb" } },

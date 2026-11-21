@@ -50,7 +50,7 @@ export default async function Contact() {
           <h2 className="h3" {...E("details.title")}>
             {c.details.title}
           </h2>
-          <p {...E("details.text")}>{c.details.text}</p>
+          {c.details.text ? <p {...E("details.text")}>{c.details.text}</p> : null}
           <dl>
             {ct.phone ? row("phone", L.phoneLabel, <a href={`tel:${ct.phone.replace(/\s/g, "")}`}>{ct.phone}</a>, "settings:contact.phone") : null}
             {ct.email ? row("mail", L.emailLabel, <a href={`mailto:${ct.email}`}>{ct.email}</a>, "settings:contact.email") : null}

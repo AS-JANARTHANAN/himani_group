@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import { DEFAULT_EDGES, sectionOrder, styleAttrs, type Layout } from "@/lib/layout";
+import { sectionOrder, styleAttrs, type Layout } from "@/lib/layout";
 
 /** Renders a page's sections in the order chosen in the CMS, skipping hidden ones and applying per-section styles. */
 export default function Sections({ page, data, blocks }: { page: string; data: Record<string, any>; blocks: Record<string, ReactNode> }) {
@@ -10,7 +10,7 @@ export default function Sections({ page, data, blocks }: { page: string; data: R
         const node = blocks[key];
         const st = layout.sections?.[key] || {};
         if (!node || st.hidden) return null;
-        const { attrs, vars } = styleAttrs(st, DEFAULT_EDGES[page]?.[key]);
+        const { attrs, vars } = styleAttrs(st);
         return (
           <div key={key} className="sec-shell" data-section={key} {...attrs} style={vars as CSSProperties}>
             {node}

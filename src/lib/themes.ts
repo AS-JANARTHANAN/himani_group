@@ -10,11 +10,20 @@ export type ThemeColors = {
   paper: string; // page background
   text: string; // body text
   accentOnDark?: string; // highlight colour for text on dark backgrounds (defaults to accent)
+  deep?: string; // dark section background (defaults to the dark colour)
+  card?: string; // cards / rows on dark sections (defaults to a lighter dark)
 };
 
 export type Preset = { key: string; label: string; description: string; font: string; colors: ThemeColors; gradient?: boolean };
 
 export const PRESETS: Preset[] = [
+  {
+    key: "himani-original",
+    label: "Himani Original",
+    description: "The approved Himani Group design: deep forest green, gold and champagne on warm cream, with classic Georgia headings.",
+    font: "original",
+    colors: { dark: "#071b14", deep: "#0b261b", card: "#143527", accent: "#c6a268", onAccent: "#0a2117", accentText: "#84632a", accentOnDark: "#e9d6b1", light: "#efe8d8", paper: "#f5f1e7", text: "#253027" },
+  },
   {
     key: "site-yellow",
     label: "Site Yellow",
@@ -49,6 +58,7 @@ export const PRESETS: Preset[] = [
 export const DEFAULT_PRESET = PRESETS[0];
 
 export const FONT_OPTIONS = [
+  { value: "original", label: "Original: Georgia headings, Arial text (as in the approved design)" },
   { value: "industrial", label: "Industrial: tall, strong headings (Barlow Condensed)" },
   { value: "modern", label: "Modern: clean, geometric headings (Space Grotesk)" },
   { value: "bold", label: "Bold: heavy, wide headings (Archivo)" },

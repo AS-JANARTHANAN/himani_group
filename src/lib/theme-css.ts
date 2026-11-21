@@ -19,7 +19,9 @@ export function themeCss(t: any = {}) {
   const fill = t.gradient
     ? `linear-gradient(135deg, color-mix(in srgb, ${accent} 45%, #fff2c0), ${accent} 55%, color-mix(in srgb, ${accent} 85%, #000))`
     : accent;
-  return `:root{--dark:${dark};--accent:${accent};--accent-fill:${fill};--accent-on-dark:${onDark};--on-accent:${hex(t.onAccent, d.onAccent)};--accent-text:${hex(t.accentText, d.accentText)};--light:${hex(
+  const deep = hex(t.deep, dark);
+  const card = hex(t.card, "");
+  return `:root{--dark:${dark};--deep:${deep};${card ? `--card:${card};` : ""}--accent:${accent};--accent-fill:${fill};--accent-on-dark:${onDark};--on-accent:${hex(t.onAccent, d.onAccent)};--accent-text:${hex(t.accentText, d.accentText)};--light:${hex(
     t.light,
     d.light
   )};--paper:${hex(t.paper, d.paper)};--text:${text};--base:${num(t.baseSize, 16, 12, 22)}px;--hscale:${num(t.headingScale, 100, 60, 160) / 100}}${t.gradient ? shiny(onDark, accent) : ""}`;

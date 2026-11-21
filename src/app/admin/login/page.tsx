@@ -14,7 +14,7 @@ export default async function Login() {
   return (
     <div className="login-wrap">
       <div className="login-art">
-        <img src="/media/stock/hero-excavator.webp" alt="" />
+        <img src="/media/design/himani-complex.webp" alt="" />
       </div>
       <div className="login-box">
         <div className="login-card">

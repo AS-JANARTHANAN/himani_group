@@ -14,11 +14,11 @@ export default async function Businesses() {
   const blocks = {
     hero: <PageHero hero={c.hero} crumbs={[{ label: s.labels.breadcrumbHome, href: "/" }, { label: c.hero.eyebrow }]} />,
     note: (
-      <section className="section light">
+      <section className="businesses">
         <div className="wrap">
-          <VerticalRows items={verticals} linkLabel={c.detail.cardLinkLabel} />
+          <VerticalRows items={verticals} eyebrow={c.detail.eyebrow} linkLabel={c.detail.cardLinkLabel} />
           {c.note.text ? (
-            <p className="note" {...E("note.text")}>
+            <p className="photo-note" {...E("note.text")}>
               {c.note.text}
             </p>
           ) : null}

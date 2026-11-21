@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ldJson, pageMeta } from "@/lib/seo";
 import Icon from "@/components/Icon";
-import { CtaBand, E, Heading, VerticalRows, pic } from "@/components/site/Blocks";
+import { CtaBand, E, Heading, VerticalRows, pic, SIZES } from "@/components/site/Blocks";
 import HeroGlobe from "@/components/site/HeroGlobe";
-import ServiceScene from "@/components/site/ServiceScene";
+import BusinessCarousel from "@/components/site/BusinessCarousel";
 import Sections from "@/components/site/Sections";
 import { getContent, getLocations, getSettings, getVerticals, paragraphs } from "@/lib/content";
 
@@ -30,64 +30,35 @@ export default async function Home() {
 
   const blocks = {
     hero: (
-      <section className="hero-home">
+      <section className="hero-home" id="home">
         {hero.image ? (
-          <div className="photo" {...E("hero.image")}>
+          <div className="hero-photo" {...E("hero.image")}>
             <img {...pic(hero.image)} alt={hero.imageAlt} fetchPriority="high" />
           </div>
         ) : null}
-        <div className="wrap copy">
-          {hero.eyebrow ? (
-            <div className="tag" {...E("hero.eyebrow")}>
-              {hero.eyebrow}
+        <div className="hero-band">
+          <div className="wrap hero-copy">
+            {hero.eyebrow ? (
+              <div className="eyebrow" {...E("hero.eyebrow")}>
+                {hero.eyebrow}
+              </div>
+            ) : null}
+            <Heading as="h1" className="h1" title={hero.title} accent={hero.titleAccent} k="hero." />
+            {hero.text ? <p {...E("hero.text")}>{hero.text}</p> : null}
+            <div className="buttons">
+              {hero.primaryLabel ? (
+                <Link href={hero.primaryHref || "/businesses"} className="btn" {...E("hero.primaryLabel")}>
+                  {hero.primaryLabel}
+                </Link>
+              ) : null}
+              {hero.secondaryLabel ? (
+                <Link href={hero.secondaryHref || "/about"} className="link-line" {...E("hero.secondaryLabel")}>
+                  {hero.secondaryLabel}
+                </Link>
+              ) : null}
             </div>
-          ) : null}
-          <Heading as="h1" className="display" title={hero.title} accent={hero.titleAccent} k="hero." />
-          {hero.text ? (
-            <p className="lede reveal" {...E("hero.text")}>
-              {hero.text}
-            </p>
-          ) : null}
-          <div className="actions reveal d1">
-            {hero.primaryLabel ? (
-              <Link href={hero.primaryHref || "/businesses"} className="btn" {...E("hero.primaryLabel")}>
-                {hero.primaryLabel} {hero.primaryIcon ? <Icon name={hero.primaryIcon} size={20} /> : null}
-              </Link>
-            ) : null}
-            {hero.secondaryLabel ? (
-              <Link href={hero.secondaryHref || "/contact"} className="btn outline" {...E("hero.secondaryLabel")}>
-                {hero.secondaryLabel}
-              </Link>
-            ) : null}
           </div>
-          <a href="#intro" className="scroll-cue" {...E("settings:labels.scrollLabel")}>
-            <i />
-            {s.labels.scrollLabel}
-          </a>
         </div>
-        {hero.highlights?.length ? (
-          <div className="hero-strip">
-            <div className="wrap strip-row">
-              {hero.highlights.map((h: any, i: number) => {
-                const inner = (
-                  <>
-                    <span className="ic">{h.icon ? <Icon name={h.icon} size={26} /> : pad(i + 1)}</span>
-                    <span>{h.text}</span>
-                  </>
-                );
-                return h.href ? (
-                  <Link key={i} href={h.href} className="strip-item" {...E(`hero.highlights.${i}`)}>
-                    {inner}
-                  </Link>
-                ) : (
-                  <div key={i} className="strip-item" {...E(`hero.highlights.${i}`)}>
-                    {inner}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ) : null}
       </section>
     ),
 
@@ -95,7 +66,7 @@ export default async function Home() {
       <div className="marquee" aria-hidden {...E("ticker.items")}>
         <div className="track">
           {[0, 1].map((k) => (
-            <div key={k} style={{ display: "flex" }}>
+            <div key={k} className="track-set">
               {tickerItems.map((t, i) => (
                 <span className="item" key={t + i + k}>
                   {t}
@@ -108,22 +79,9 @@ export default async function Home() {
     ) : null,
 
     intro: (
-      <section className="section" id="intro">
-        <div className="wrap split">
-          {intro.image ? (
-            <div className="framed reveal" {...E("intro.image")}>
-              <div className="img-zoom reveal-img">
-                <img {...pic(intro.image, "(max-width: 900px) 100vw, 50vw")} alt={intro.imageAlt} loading="lazy" />
-              </div>
-              {intro.badgeTitle || intro.badgeText ? (
-                <div className="intro-badge" {...E("intro.badgeTitle")}>
-                  <b>{intro.badgeTitle}</b>
-                  <span>{intro.badgeText}</span>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
-          <div className="reveal d1">
+      <section className="section" id="about">
+        <div className="wrap about">
+          <div className="reveal">
             <div className="eyebrow" {...E("intro.eyebrow")}>
               {intro.eyebrow}
             </div>
@@ -136,17 +94,22 @@ export default async function Home() {
               ))}
             </div>
             {intro.linkLabel ? (
-              <Link href={intro.linkHref || "/about"} className="btn" {...E("intro.linkLabel")}>
-                {intro.linkLabel} <Icon name="arrow" size={20} />
+              <Link href={intro.linkHref || "/about"} className="link-line dark" {...E("intro.linkLabel")}>
+                {intro.linkLabel}
               </Link>
             ) : null}
           </div>
+          {intro.image ? (
+            <div className="about-art reveal" {...E("intro.image")}>
+              <img {...pic(intro.image, SIZES.aboutArt)} alt={intro.imageAlt} loading="lazy" />
+            </div>
+          ) : null}
         </div>
       </section>
     ),
 
     verticals: (
-      <section className="section on-dark grid-bg" id="services">
+      <section className="businesses" id="businesses">
         <div className="wrap">
           <div className="section-head reveal">
             <div>
@@ -159,11 +122,16 @@ export default async function Home() {
             </div>
             <p {...E("verticals.text")}>{c.verticals.text}</p>
           </div>
-          <VerticalRows items={verticals} linkLabel={biz.detail.cardLinkLabel} />
+          <VerticalRows items={verticals} eyebrow={biz.detail.eyebrow} linkLabel={biz.detail.cardLinkLabel} />
+          {biz.note?.text ? (
+            <p className="photo-note">
+              {biz.note.text}
+            </p>
+          ) : null}
           {c.verticals.linkLabel ? (
             <div className="center-row">
               <Link href="/businesses" className="btn" {...E("verticals.linkLabel")}>
-                {c.verticals.linkLabel} <Icon name="arrow" size={20} />
+                {c.verticals.linkLabel}
               </Link>
             </div>
           ) : null}
@@ -171,23 +139,22 @@ export default async function Home() {
       </section>
     ),
 
-    explore: verticals.length ? (
-      <section className="section" id="explore">
+    carousel: verticals.length ? (
+      <section className="section carousel-band">
         <div className="wrap">
-          <div className="explore-head reveal">
+          <div className="section-head reveal">
             <div>
-              <div className="eyebrow" {...E("explore.eyebrow")}>
-                {c.explore.eyebrow}
-              </div>
-              <h2 className="h2" {...E("explore.title")}>
-                {c.explore.title}
-              </h2>
+              {c.carousel?.eyebrow ? (
+                <div className="eyebrow" {...E("carousel.eyebrow")}>
+                  {c.carousel.eyebrow}
+                </div>
+              ) : null}
+              <Heading title={c.carousel?.title} accent={c.carousel?.titleAccent} k="carousel." />
             </div>
-            {c.explore.text ? <p {...E("explore.text")}>{c.explore.text}</p> : null}
+            {c.carousel?.text ? <p {...E("carousel.text")}>{c.carousel.text}</p> : null}
           </div>
-          <ServiceScene
-            services={verticals.map(({ id, slug, title, summary, icon }) => ({ id, slug, title, summary, icon: icon || "" }))}
-            labels={{ hint: c.explore.hint, linkLabel: c.explore.linkLabel }}
+          <BusinessCarousel
+            items={verticals.map((v) => ({ slug: v.slug, title: v.title, summary: v.summary, image: v.image, imageAlt: v.imageAlt, imagePosition: v.imagePosition, src: pic(v.image, SIZES.carousel) }))}
           />
         </div>
       </section>
@@ -223,7 +190,7 @@ export default async function Home() {
           {strengths.image ? (
             <div className="tall-img reveal d1" {...E("strengths.image")}>
               <div className="img-zoom reveal-img">
-                <img {...pic(strengths.image, "(max-width: 900px) 100vw, 50vw")} alt="" loading="lazy" />
+                <img {...pic(strengths.image, SIZES.tall)} alt="" loading="lazy" />
               </div>
             </div>
           ) : null}
@@ -270,21 +237,21 @@ export default async function Home() {
     ),
 
     vision: (
-      <section className="vision-band" id="vision">
+      <section className={`vision-band ${vision.image && !vision.showText ? "image-only" : ""}`} id="vision">
         {vision.image ? (
-          <div className="bg" {...E("vision.image")}>
-            <img {...pic(vision.image)} alt="" loading="lazy" />
+          <div className="vb-photo" {...E("vision.image")}>
+            <img {...pic(vision.image)} alt={[vision.title, vision.titleAccent].filter(Boolean).join(" ")} loading="lazy" />
           </div>
         ) : null}
-        <div className="wrap inner reveal">
+        <div className="wrap vb-copy reveal">
           <div className="eyebrow" {...E("vision.eyebrow")}>
             {vision.eyebrow}
           </div>
-          <Heading className="h1" title={vision.title} accent={vision.titleAccent} k="vision." />
+          <Heading className="h2" title={vision.title} accent={vision.titleAccent} k="vision." />
           <p {...E("vision.text")}>{vision.text}</p>
           {vision.linkLabel ? (
             <Link href={vision.linkHref || "/vision"} className="btn" {...E("vision.linkLabel")}>
-              {vision.linkLabel} <Icon name="arrow" size={20} />
+              {vision.linkLabel}
             </Link>
           ) : null}
         </div>

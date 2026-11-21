@@ -20,7 +20,7 @@ const groups: { label: string; items: Item[] }[] = [
   {
     label: "Services & places",
     items: [
-      { href: "/admin/verticals", label: "Services", icon: "excavator" },
+      { href: "/admin/verticals", label: "Businesses", icon: "excavator" },
       { href: "/admin/locations", label: "Locations (globe)", icon: "pin" },
       { href: "/admin/custom-pages", label: "Extra pages", icon: "layers" },
     ],

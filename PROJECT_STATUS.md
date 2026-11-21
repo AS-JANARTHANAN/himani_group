@@ -1,6 +1,20 @@
 # Himani Group Website: Project Status & Next Steps
 
-_Last updated: 19 Nov 2026 (redesign)_
+_Last updated: 20 Nov 2026 (approved HTML design)_
+
+## 00. Approved HTML design of 20 Nov 2026 (current)
+
+The site now follows the client-approved single-page HTML design, split into separate pages.
+
+- **Look:** "Himani Original" colour template (default): deep forest green, gold #c6a268, champagne, warm cream; Georgia headings, Arial text. Other templates remain selectable.
+- **Images:** the 12 design images in `public/media/design/` (hero = Golden-Hour Himani Group Complex). Logo: `public/brand/himani-logo.svg`.
+- **Home (design order):** building photo + headline band → running strip of business names (the one small extra) → Who We Are → 9 business rows → Vision banner → Connect With Us → one-line footer.
+- **Pages:** About (Who We Are), Our Businesses (9 rows), each business page, Vision (the banner), Contact (form). All wording is the design's wording.
+- **Hidden, not deleted (switch on in the admin "Look" settings):** home Why-choose-us, globe and FAQ; About principles and steps; Vision hero, vision/mission, values, looking-ahead; the Where-We-Work page (noindex, menu link hidden); the Earthmoving service.
+- **Removed:** interactive service scene, section edges, shaped photos.
+- **Database:** backed up to `backups/himani-2026-11-20-before-html-design.db`, then moved to the new content with `scripts/qa/migrate-html-design.ts` (contact details, socials, tracking and locations kept).
+- **4K images (update):** the hero and the six smaller HTML photos (who-we-are, equipment, construction, tiles, heritage wood, agriculture, vision banner) were AI-upscaled with Real-ESRGAN x4plus to 3840 px wide 4K masters; the four 2600 px photos were already sharp and are unchanged. Large / retina screens now load up to 3840 px.
+- **Fuller pages (update, same day):** the client asked for more components and content. Re-enabled with new copy in the design's voice, using only the HTML photos: Home (Why Himani Group, new self-running business photo carousel, Where We Work globe, FAQ), About (principles, 4-step approach), Vision (vision & mission, 6 values, looking ahead), Where We Work page (indexed again, linked from Home). The running name strip under the hero stays. Backup before this step: `backups/himani-2026-11-20-before-fuller-content.db`.
 
 ## 0. Redesign of 19 Nov 2026 (replaces the old green/gold look)
 

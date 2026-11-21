@@ -1,20 +1,38 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Icon from "@/components/Icon";
-import { CtaBand, E, PageHero, pic } from "@/components/site/Blocks";
+import { CtaBand, E, Heading, PageHero, pic, SIZES } from "@/components/site/Blocks";
 import Sections from "@/components/site/Sections";
 import { getContent, getSettings, paragraphs } from "@/lib/content";
 
 export async function generateMetadata(): Promise<Metadata> {
   const c = await getContent("vision");
-  return pageMeta(c.seo, "/vision", { image: c.hero?.image });
+  return pageMeta(c.seo, "/vision", { image: c.hero?.image || c.banner?.image });
 }
 
 export default async function Vision() {
   const [c, s] = await Promise.all([getContent("vision"), getSettings()]);
   const { statement, values, horizon } = c;
+  const heroHidden = !!c._layout?.sections?.hero?.hidden;
   const blocks = {
     hero: <PageHero hero={c.hero} crumbs={[{ label: s.labels.breadcrumbHome, href: "/" }, { label: c.hero.eyebrow }]} />,
+    banner: c.banner?.image ? (
+      <section className="vision-band image-only">
+        <div className="vb-photo" {...E("banner.image")}>
+          <img {...pic(c.banner.image)} alt={c.banner.imageAlt || ""} fetchPriority={heroHidden ? "high" : undefined} />
+        </div>
+        {heroHidden ? (
+          // The words are part of the picture: kept as real text for Google, and shown under the picture on phones.
+          <div className="wrap vb-copy">
+            <div className="eyebrow" {...E("hero.eyebrow")}>
+              {c.hero.eyebrow}
+            </div>
+            <Heading as="h1" className="h2" title={c.hero.title} accent={c.hero.titleAccent} k="hero." />
+            {c.hero.text ? <p {...E("hero.text")}>{c.hero.text}</p> : null}
+          </div>
+        ) : null}
+      </section>
+    ) : null,
     statement: (
       <section className="section">
         <div className="wrap statements">
@@ -69,7 +87,7 @@ export default async function Vision() {
           {horizon.image ? (
             <div className="framed reveal" {...E("horizon.image")}>
               <div className="img-zoom reveal-img">
-                <img {...pic(horizon.image, "(max-width: 900px) 100vw, 50vw")} alt="" loading="lazy" />
+                <img {...pic(horizon.image, SIZES.framed)} alt="" loading="lazy" />
               </div>
             </div>
           ) : null}

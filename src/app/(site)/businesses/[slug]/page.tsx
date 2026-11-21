@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Icon from "@/components/Icon";
-import { E, pic } from "@/components/site/Blocks";
+import { E, pic, SIZES } from "@/components/site/Blocks";
 import { getContent, getSettings, getVerticals, paragraphs } from "@/lib/content";
 import { breadcrumbLd, ldJson, pageMeta, serviceLd } from "@/lib/seo";
 
@@ -42,37 +42,31 @@ export default async function VerticalPage({ params }: P) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(ld) }} />
-      <section className="page-hero has-image detail-hero">
-        <div className="bg" data-edit={vk}>
-          {v.image ? <img {...pic(v.image)} alt={v.imageAlt} style={{ objectPosition: v.imagePosition }} /> : null}
-        </div>
-        <div className="wrap inner">
-          <div className="crumbs">
-            <Link href="/" {...E("settings:labels.breadcrumbHome")}>
-              {s.labels.breadcrumbHome}
-            </Link>
-            <span aria-hidden> / </span>
-            <Link href="/businesses">{c.hero.eyebrow}</Link>
-            <span aria-hidden> / </span>
-            <span>{String(i + 1).padStart(2, "0")}</span>
+      <section className={`page-hero detail-hero ${v.image ? "has-image" : ""}`}>
+        {v.image ? (
+          <div className="ph-photo" data-edit={vk}>
+            <img {...pic(v.image, SIZES.pageHero)} alt={v.imageAlt} style={{ objectPosition: v.imagePosition }} />
+            <span className="v-index">{String(i + 1).padStart(2, "0")}</span>
           </div>
-          <div className="tag" {...E("detail.eyebrow")}>
-            {v.icon ? <Icon name={v.icon} size={16} /> : null}
-            {d.eyebrow}
+        ) : null}
+        <div className="ph-band">
+          <div className="wrap ph-inner">
+            <nav className="crumbs" aria-label="Breadcrumb">
+              <Link href="/" {...E("settings:labels.breadcrumbHome")}>
+                {s.labels.breadcrumbHome}
+              </Link>
+              <span aria-hidden> / </span>
+              <Link href="/businesses">{c.hero.title}</Link>
+            </nav>
+            <div className="eyebrow" {...E("detail.eyebrow")}>
+              {d.eyebrow}
+            </div>
+            <h1 className="h1" data-edit={vk}>
+              {v.title}
+            </h1>
+            <p data-edit={vk}>{v.summary}</p>
           </div>
-          <h1 className="h1 lines">
-            <span>
-              <span data-edit={vk}>{v.title}</span>
-            </span>
-          </h1>
-          <p className="lede reveal" data-edit={vk}>
-            {v.summary}
-          </p>
-          <span className="big-n" aria-hidden>
-            {String(i + 1).padStart(2, "0")}
-          </span>
         </div>
-        <div className="hazard" aria-hidden />
       </section>
 
       <section className="section">

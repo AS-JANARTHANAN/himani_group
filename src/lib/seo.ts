@@ -75,7 +75,7 @@ export async function siteJsonLd() {
     slogan: s.brand.tagline,
     description: s.seo.description,
     url: base,
-    logo: abs(base, s.brand.logo),
+    logo: abs(base, String(s.brand.logo || "").endsWith(".svg") ? "/brand/logo-512.png" : s.brand.logo), // Google needs a raster logo
     image: abs(base, s.seo.ogImage),
     telephone: c.phone,
     email: c.email,

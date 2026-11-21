@@ -574,7 +574,7 @@ export default function SchemaForm({
   const applyPreset = (key: string) => {
     const p = PRESETS.find((x) => x.key === key);
     if (!p) return;
-    setData((d) => ({ ...d, theme: { ...(d.theme || {}), ...p.colors, accentOnDark: p.colors.accentOnDark || p.colors.accent, gradient: !!p.gradient, font: p.font, preset: key } }));
+    setData((d) => ({ ...d, theme: { ...(d.theme || {}), ...p.colors, accentOnDark: p.colors.accentOnDark || p.colors.accent, deep: p.colors.deep || "", card: p.colors.card || "", gradient: !!p.gradient, font: p.font, preset: key } }));
   };
 
   /* ---- click in preview → jump to the field ---- */
