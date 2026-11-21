@@ -11,8 +11,8 @@ export default async function Locations() {
       <div className="a-top">
         <div>
           <div className="a-crumb">Services & places</div>
-          <h1>Locations on the globe</h1>
-          <p>The places shown as dots on the turning globe. Lines are drawn from the head office to every other shown location.</p>
+          <h1>Locations on the compass dial</h1>
+          <p>The places shown on the compass dial ("Where we work"). The head office is the star in the centre; every other published place is put on the dial automatically at its real direction and distance from it. Add the places you want, delete the ones you don't, or click Published / Hidden to hide one without deleting it.</p>
         </div>
         <Link href="/admin/locations/new" className="a-btn">
           + Add location

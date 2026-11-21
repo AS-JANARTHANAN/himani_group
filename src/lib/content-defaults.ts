@@ -303,7 +303,7 @@ export const contentDefaults: Record<string, any> = {
       title: "Rooted in Dubai.",
       titleAccent: "Connected Beyond Borders.",
       text: "Our head office is in Dubai. Our teams, partners and suppliers connect the Gulf with India and other markets.",
-      hint: "Drag the globe to turn it · Tap a place to zoom in",
+      hint: "Drag the dial or tap a place to turn it",
       statCountries: "Countries",
       statLocations: "Locations",
       statRoutes: "Supply routes",

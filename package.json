@@ -8,8 +8,7 @@
     "start": "next start -p 3100",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
-    "setup": "prisma db push && tsx prisma/seed.ts",
-    "globe:dots": "node scripts/build-land-dots.mjs"
+    "setup": "prisma db push && tsx prisma/seed.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

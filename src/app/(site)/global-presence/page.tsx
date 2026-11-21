@@ -38,6 +38,7 @@ export default async function Presence() {
               { value: pad(routes), label: hero.statRoutes },
             ]}
             hint={hero.hint}
+            labels={labels}
           />
         </div>
       </section>

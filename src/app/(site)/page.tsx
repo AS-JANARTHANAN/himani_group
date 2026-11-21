@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ldJson, pageMeta } from "@/lib/seo";
 import Icon from "@/components/Icon";
 import { CtaBand, E, Heading, VerticalRows, pic, SIZES } from "@/components/site/Blocks";
-import HeroGlobe from "@/components/site/HeroGlobe";
+import Astrolabe from "@/components/site/Astrolabe";
 import BusinessCarousel from "@/components/site/BusinessCarousel";
 import Sections from "@/components/site/Sections";
 import { getContent, getLocations, getSettings, getVerticals, paragraphs } from "@/lib/content";
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export default async function Home() {
-  const [c, verticals, locations, biz, s] = await Promise.all([getContent("home"), getVerticals(), getLocations(), getContent("businesses"), getSettings()]);
+  const [c, verticals, locations, biz, s, pres] = await Promise.all([getContent("home"), getVerticals(), getLocations(), getContent("businesses"), getSettings(), getContent("presence")]);
   const { hero, intro, presence, vision, strengths } = c;
   const countries = new Set(locations.map((l) => l.country)).size;
   const ticker: string[] = (c.ticker?.items || []).map((i: any) => i?.text).filter(Boolean);
@@ -230,7 +230,10 @@ export default async function Home() {
             ) : null}
           </div>
           <div className="reveal d1">
-            <HeroGlobe locations={locations.map(({ id, city, country, kind, lat, lng }) => ({ id, city, country, kind, lat, lng }))} />
+            <Astrolabe
+              locations={locations.map(({ id, city, country, kind, lat, lng, description }) => ({ id, city, country, kind, lat, lng, description }))}
+              labels={{ hq: pres.locations?.hqLabel, office: pres.locations?.officeLabel, market: pres.locations?.marketLabel }}
+            />
           </div>
         </div>
       </section>

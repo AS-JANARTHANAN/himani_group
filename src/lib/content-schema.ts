@@ -449,7 +449,7 @@ export const pageSchemas: PageSchema[] = [
       {
         key: "presence",
         icon: "globe",
-        label: "Where we work (globe)",
+        label: "Where we work (compass dial)",
         fields: [
           eyebrow,
           title,
@@ -562,18 +562,18 @@ export const pageSchemas: PageSchema[] = [
     key: "presence",
     label: "Where we work",
     path: "/global-presence",
-    description: "The page with the turning globe. The places on the globe are edited under \"Locations\".",
+    description: "The page with the turning compass dial (astrolabe). The places on the dial are edited under \"Locations\"; each one is placed automatically by its direction and distance from the head office.",
     sections: [
       {
         key: "hero",
         icon: "globe",
-        label: "Top banner with globe",
+        label: "Top banner with compass dial",
         fields: [
           eyebrow,
           title,
           titleAccent,
           text(3, "Introduction"),
-          { name: "hint", label: "Small hint under the globe", type: "text" },
+          { name: "hint", label: "Small hint under the dial", type: "text" },
           { name: "statCountries", label: "Counter text: countries", type: "text" },
           { name: "statLocations", label: "Counter text: locations", type: "text" },
           { name: "statRoutes", label: "Counter text: routes", type: "text" },

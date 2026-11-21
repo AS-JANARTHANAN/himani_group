@@ -635,7 +635,7 @@ export default function SchemaForm({
         return;
       }
       if (key.startsWith("location:")) {
-        setNotice({ text: "This is a location on the globe.", href: `/admin/locations/${key.slice(9)}`, link: "Edit this location →" });
+        setNotice({ text: "This is a location on the compass dial.", href: `/admin/locations/${key.slice(9)}`, link: "Edit this location →" });
         return;
       }
       if (key.startsWith("settings:")) {

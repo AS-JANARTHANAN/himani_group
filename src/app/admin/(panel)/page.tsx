@@ -76,7 +76,7 @@ export default async function Dashboard() {
             <Svg name="pin" />
           </span>
           <h3>Locations ({locations})</h3>
-          <p>Places shown on the globe</p>
+          <p>Places shown on the compass dial</p>
         </Link>
       </div>
 

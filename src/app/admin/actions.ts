@@ -212,7 +212,7 @@ export async function saveLocation(id: string | null, json: string): Promise<Res
   const fromLink = parseCoords(str(d.maps, 2000));
   if (fromLink && "error" in fromLink) return { ok: false, error: fromLink.error };
   const lat = fromLink ? fromLink.lat : Number(d.lat), lng = fromLink ? fromLink.lng : Number(d.lng);
-  if (d.lat === "" && d.lng === "" && !fromLink) return { ok: false, error: "Please paste a Google Maps link (or the two numbers) so the place can be shown on the globe." };
+  if (d.lat === "" && d.lng === "" && !fromLink) return { ok: false, error: "Please paste a Google Maps link (or the two numbers) so the place can be shown on the dial." };
   if (!str(d.city).trim()) return { ok: false, error: "City / name is required." };
   if (!Number.isFinite(lat) || lat < -90 || lat > 90) return { ok: false, error: "Latitude must be between -90 and 90." };
   if (!Number.isFinite(lng) || lng < -180 || lng > 180) return { ok: false, error: "Longitude must be between -180 and 180." };

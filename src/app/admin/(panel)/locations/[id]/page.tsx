@@ -45,7 +45,7 @@ export default async function EditLocation({ params }: { params: Promise<{ id: s
         previewHref="/global-presence"
         previewSrc="/api/preview?path=%2Fglobal-presence"
         redirectTo="/admin/locations/{id}"
-        submitLabel={isNew ? "Add to the globe" : "Save & publish"}
+        submitLabel={isNew ? "Add to the dial" : "Save & publish"}
       />
     </>
   );
