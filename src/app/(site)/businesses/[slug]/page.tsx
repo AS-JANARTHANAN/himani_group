@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Icon from "@/components/Icon";
-import { E, pic, SIZES } from "@/components/site/Blocks";
+import { CtaBand, E, pic, SIZES } from "@/components/site/Blocks";
 import { getContent, getSettings, getVerticals, paragraphs } from "@/lib/content";
 import { breadcrumbLd, ldJson, pageMeta, serviceLd } from "@/lib/seo";
 
@@ -69,6 +69,8 @@ export default async function VerticalPage({ params }: P) {
         </div>
       </section>
 
+      {/* Extra text per business is optional: without it the page shows the HTML's "Connect With Us" strip */}
+      {v.intro || v.body || v.capabilities.length ? (
       <section className="section">
         <div className="wrap detail-body">
           <div data-edit={vk}>
@@ -108,6 +110,9 @@ export default async function VerticalPage({ params }: P) {
           </aside>
         </div>
       </section>
+      ) : (
+        <CtaBand cta={c.cta} />
+      )}
 
       {next && next.slug !== v.slug ? (
         <Link href={`/businesses/${next.slug}`} className="next-v">

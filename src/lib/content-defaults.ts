@@ -227,25 +227,25 @@ export const contentDefaults: Record<string, any> = {
   },
 
   about: {
+    _layout: hide("pillars", "approach"),
     seo: S("About Himani Group | A Vision That Spans Industries | Dubai", SUMMARY),
     hero: {
       eyebrow: "About Us",
       title: "A Vision That Spans Industries",
       titleAccent: "",
-      text: "Connecting industries, cultivating opportunities, and shaping a future of sustainable growth through a diversified business vision.",
-      image: "/media/design/himani-complex.webp",
-      imageAlt: "Himani Group architectural building",
+      text: "",
+      image: "",
+      imageAlt: "",
     },
     story: {
       eyebrow: "Who We Are",
-      title: "Diversified Businesses. One Vision.",
+      title: "",
       text:
         SUMMARY +
-        "\n\nWith an emphasis on reliable relationships, practical solutions, and long-term value, we aim to connect opportunities and build enduring business capabilities." +
-        "\n\nFrom our base in Dubai, each of our verticals is led by people who know their field, and all of them share one way of working: listen first, plan clearly, and deliver what was agreed.",
+        "\n\nWith an emphasis on reliable relationships, practical solutions, and long-term value, we aim to connect opportunities and build enduring business capabilities.",
       image: "/media/design/who-we-are-dubai.webp",
       imageAlt: "Dubai skyline",
-      quote: "Excellence in Every Endeavour. Vision Beyond Boundaries.",
+      quote: "",
     },
     pillars: {
       eyebrow: "What We Stand For",
@@ -280,8 +280,8 @@ export const contentDefaults: Record<string, any> = {
       title: "Our Business Verticals",
       titleAccent: "",
       text: "Distinct areas of enterprise united by a commitment to progress, quality, and long-term partnerships.",
-      image: "/media/design/international-trade.webp",
-      imageAlt: "International Trade & Exports representative image",
+      image: "",
+      imageAlt: "",
     },
     detail: {
       eyebrow: "Himani Group / Business Vertical",
@@ -330,7 +330,7 @@ export const contentDefaults: Record<string, any> = {
   },
 
   vision: {
-    _layout: hide("hero"),
+    _layout: hide("hero", "statement", "values", "horizon"),
     seo: S(
       "Our Vision | Growing with Purpose. Advancing with Vision. | Himani Group",
       "To create lasting value through diversified enterprise, responsible operations, trusted partnerships, and the pursuit of new opportunities."
@@ -386,8 +386,8 @@ export const contentDefaults: Record<string, any> = {
       title: "Let's Build What Comes Next.",
       titleAccent: "",
       text: "We welcome conversations about commercial opportunities, suppliers, and strategic partnerships.",
-      image: "/media/design/who-we-are-dubai.webp",
-      imageAlt: "Dubai skyline",
+      image: "",
+      imageAlt: "",
     },
     form: {
       title: "Business Enquiries",
@@ -405,7 +405,7 @@ export const contentDefaults: Record<string, any> = {
     },
     details: {
       title: "Get in Touch",
-      text: "Call, email or message us. We reply to every business enquiry.",
+      text: "",
       addressLabel: "Address",
       hoursLabel: "Opening hours",
       mapLabel: "Open in Google Maps",

@@ -61,7 +61,7 @@ Open any image field → **Replace** → upload. Use images at least 2000px wide
 
 - Headings and descriptions from the approved design are kept word for word.
 - Longer vertical-page copy, guiding principles, values and "How we work" are **draft text** written at capability level. Please review them in the Content Studio.
-- Locations: Dubai (HQ), Chennai and Karaikudi come from the supplied material and are published. Riyadh, Singapore and London are **hidden sample markets**: publish them only if they are accurate. The counters on the site (countries, locations, routes) are calculated from the published locations.
+- Locations: none appear in the approved HTML. Dubai (head office) is shown only because of the Dubai SEO brief; **the client must confirm it**. Chennai, Karaikudi, Riyadh, Singapore and London are **hidden, unconfirmed samples**: publish a place only when the client confirms it. The counters on the site (countries, locations, routes) are calculated from the published locations.
 - Contact email and phone are empty until set in Site Settings. Empty fields are hidden on the site.
 
 ## Deployment
