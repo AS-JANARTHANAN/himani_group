@@ -18,6 +18,8 @@ const security = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracingRoot: path.dirname(fileURLToPath(import.meta.url)),
+  // Bundles the built SQLite file into the serverless function (Vercel has no persistent disk).
+  outputFileTracingIncludes: { "/**": ["./prisma/*.db"] },
   devIndicators: false,
   // Lets a production test build sit next to the dev server: NEXT_DIST_DIR=.next-prod
   distDir: process.env.NEXT_DIST_DIR || ".next",
